@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { getLeads, updateLead } from "../services/leadService";
-import type { Lead } from "../types";
-import SlideOver from "./SlideOver";
+import type { Lead, Opportunity } from "../types";
+import { LeadDetails } from "./LeadDetails";
+import { NewOpportunity } from "./NewOpportunity";
+import { createOpportunity } from "../services/opportunityService";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -9,6 +11,7 @@ export default function LeadList() {
   const [filter, setFilter] = useState<string>("all");
   const [sort, setSort] = useState<string>("score");
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [newOpportunity, setNewOpportunity] = useState<Opportunity | null>(null);
 
   useEffect(() => {
     getLeads().then(setLeads);
@@ -44,13 +47,18 @@ export default function LeadList() {
     });
   }
 
-  const handleSave = (updatedLead: Lead) => {
+  const handleUpdateLead = (updatedLead: Lead) => {
     setLeads((prev) =>
       prev.map((lead) => (lead.id === updatedLead.id ? updatedLead : lead))
     );
     updateLead(updatedLead);
     setSelectedLead(null);
   };
+
+  const convertLead = (opportunity: Opportunity) => {
+    createOpportunity(opportunity!);
+    setNewOpportunity(null);
+  }
 
   return (
     <>
@@ -95,8 +103,10 @@ export default function LeadList() {
                 <th className="px-4 py-2">Email</th>
                 <th className="px-4 py-2">Score</th>
                 <th className="px-4 py-2">Status</th>
+                <th className="px-4 py-2">Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {filteredLeads().map((lead) => (
                 <tr
@@ -109,16 +119,38 @@ export default function LeadList() {
                   <td className="px-4 py-2">{lead.email}</td>
                   <td className="px-4 py-2">{lead.score}</td>
                   <td className="px-4 py-2">{lead.status}</td>
+                  <td className="px-4 py-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setNewOpportunity({id: lead.id, name: lead.name, stage: "Prospecting", accountName: lead.company});
+                      }}
+                      className={`px-4 py-2 rounded-lg bg-blue-600 text-white shadow`}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Convert
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
         </table>
 
         {selectedLead && (
-          <SlideOver
+          <LeadDetails
+            onSave={handleUpdateLead}
+            isOpen={!!selectedLead}
             lead={selectedLead}
             onClose={() => setSelectedLead(null)}
-            onSave={handleSave}
+          />
+        )}
+
+        {newOpportunity && (
+          <NewOpportunity
+            onCreate={convertLead}
+            isOpen={!!newOpportunity}
+            opportunity={newOpportunity}
+            onClose={() => setNewOpportunity(null)}
           />
         )}
       </div>

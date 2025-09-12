@@ -20,16 +20,18 @@ export default function HomePage() {
                 ? "bg-blue-600 text-white shadow"
                 : "text-gray-700 hover:bg-gray-100"
             }`}
+            style={{ cursor: "pointer" }}
           >
             Leads
           </button>
           <button
             onClick={() => setView("opportunities")}
-            className={`w-full text-left px-4 py-2 rounded-lg ${
+            className={`w-full text-left px-4 py-2 rounded-lg curs ${
               view === "opportunities"
                 ? "bg-blue-600 text-white shadow"
                 : "text-gray-700 hover:bg-gray-100"
             }`}
+            style={{ cursor: "pointer" }}
           >
             Opportunities
           </button>
