@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { getLeads } from "../services/leadService";
+import { getLeads, updateLead } from "../services/leadService";
 import type { Lead } from "../types";
+import SlideOver from "./SlideOver";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("all");
   const [sort, setSort] = useState<string>("score");
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
 
   useEffect(() => {
     getLeads().then(setLeads);
@@ -41,6 +43,14 @@ export default function LeadList() {
       return 0;
     });
   }
+
+  const handleSave = (updatedLead: Lead) => {
+    setLeads((prev) =>
+      prev.map((lead) => (lead.id === updatedLead.id ? updatedLead : lead))
+    );
+    updateLead(updatedLead);
+    setSelectedLead(null);
+  };
 
   return (
     <>
@@ -92,7 +102,8 @@ export default function LeadList() {
                 <tr
                   key={lead.id}
                   className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
-                >
+                  onClick={() => setSelectedLead(lead)}
+                  style={{ cursor: "pointer" }}>
                   <td className="px-4 py-2">{lead.name}</td>
                   <td className="px-4 py-2">{lead.company}</td>
                   <td className="px-4 py-2">{lead.email}</td>
@@ -102,7 +113,15 @@ export default function LeadList() {
               ))}
           </tbody>
         </table>
+
+        {selectedLead && (
+          <SlideOver
+            lead={selectedLead}
+            onClose={() => setSelectedLead(null)}
+            onSave={handleSave}
+          />
+        )}
       </div>
-    </>
+    </> 
   );
 }
