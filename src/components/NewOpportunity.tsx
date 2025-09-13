@@ -52,7 +52,6 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
     }
 
     onCreate(form);
-    alert("Lead converted successfully!");
     onClose();
   };
 

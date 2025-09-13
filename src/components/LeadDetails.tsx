@@ -24,7 +24,6 @@ export function LeadDetails({ lead, isOpen, onClose, onSave }: LeadDetailsProps)
   const saveEditing = () => {
     if (!validateEmail(editingLead.email)) return;
     onSave(editingLead);
-    alert("Lead updated successfully!");
     onClose();
   };
 

@@ -2,33 +2,49 @@ import type { Lead } from "../types";
 import leadsData from "../assets/leads.json";
 
 export async function getLeads(): Promise<Lead[]> {
-  await new Promise((res) => setTimeout(res, 500));
-  
-  if (localStorage.getItem('@mini-seller-console:leads') === null) {
-    localStorage.setItem('@mini-seller-console:leads', JSON.stringify(leadsData));
+  try {
+    await new Promise((res) => setTimeout(res, 500));
 
-    return leadsData;
-  } else {
-    return JSON.parse(localStorage.getItem('@mini-seller-console:leads')!);
+    const stored = localStorage.getItem('@mini-seller-console:leads');
+
+    if (!stored) {
+      localStorage.setItem('@mini-seller-console:leads', JSON.stringify(leadsData));
+      return leadsData;
+    }
+
+    return JSON.parse(stored);
+  } catch (err) {
+    throw new Error(
+      `Failed to fetch leads. ${err instanceof Error ? err.message : ""} Please try again later.`
+    );
   }
 }
 
 export async function updateLead(updated: Lead) {
-  await new Promise((res) => setTimeout(res, 500));
+  try {
+    await new Promise((res) => setTimeout(res, 500));
 
-  if (Math.random() < 0.1) {
-    throw new Error("Failed to update lead.");
-  }
+    if (Math.random() < 0.1) {
+      throw new Error("Random failure while updating lead.");
+    }
 
-  const leads: Lead[] = localStorage.getItem('@mini-seller-console:leads')
-    ? JSON.parse(localStorage.getItem('@mini-seller-console:leads')!)
-    : [];
+    const stored = localStorage.getItem('@mini-seller-console:leads');
+    if (!stored) {
+      throw new Error("No leads found in storage.");
+    }
 
-  const index = leads.findIndex((lead) => lead.id === updated.id);
+    const leads: Lead[] = JSON.parse(stored);
+    const index = leads.findIndex((lead) => lead.id === updated.id);
 
-  if (index !== -1) {
+    if (index === -1) {
+      throw new Error("Lead not found.");
+    }
+
     leads[index] = { ...leads[index], ...updated };
-    console.log(leads);
     localStorage.setItem('@mini-seller-console:leads', JSON.stringify(leads));
+
+    return leads[index];
+  } catch (err) {
+    throw new Error(err instanceof Error ? err.message : "Failed to update lead.");
   }
 }

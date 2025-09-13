@@ -4,27 +4,46 @@ import type { Lead, Opportunity } from "../types";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "./NewOpportunity";
 import { createOpportunity } from "../services/opportunityService";
+import toast from "react-hot-toast";
 
 export default function LeadList() {
+  const [loading, setLoading] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("all");
   const [sort, setSort] = useState<string>("score");
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
-  const [newOpportunity, setNewOpportunity] = useState<Opportunity | null>(null);
+  const [newOpportunity, setNewOpportunity] = useState<Opportunity | null>(
+    null
+  );
 
   useEffect(() => {
-    getLeads().then(setLeads);
+    fetchLeads();
   }, []);
 
-  if (!leads.length) {
-    return <p className="text-gray-500 dark:text-gray-400">No leads available.</p>;
+  async function fetchLeads() {
+    setLoading(true);
+    try {
+      const data = await getLeads();
+      setLeads(data);
+    } catch (error) {
+      toast.dismiss();
+      toast.error(error instanceof Error ? error.message : "Unexpected error while loading leads.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return <p className="text-gray-500 dark:text-gray-400">Loading...</p>;
   }
 
   function filteredLeads() {
     let filtered = [...leads];
     if (filter !== "all") {
-      filtered = filtered.filter((lead) => lead.status.toLowerCase() === filter);
+      filtered = filtered.filter(
+        (lead) => lead.status.toLowerCase() === filter
+      );
     }
 
     if (search) {
@@ -47,18 +66,94 @@ export default function LeadList() {
     });
   }
 
-  const handleUpdateLead = (updatedLead: Lead) => {
-    setLeads((prev) =>
-      prev.map((lead) => (lead.id === updatedLead.id ? updatedLead : lead))
+  function renderLeads() {
+    if (leads.length === 0) {
+      return (
+        <tr>
+          <td
+            colSpan={6}
+            className="text-center text-gray-500 dark:text-gray-400 py-4"
+          >
+            No leads available.
+          </td>
+        </tr>
+      );
+    }
+
+    return (
+      <table className="w-full border-collapse">
+        <thead>
+          <tr className="bg-gray-100 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
+            <th className="px-4 py-2">Name</th>
+            <th className="px-4 py-2">Company</th>
+            <th className="px-4 py-2">Email</th>
+            <th className="px-4 py-2">Score</th>
+            <th className="px-4 py-2">Status</th>
+            <th className="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {filteredLeads().map((lead) => (
+            <tr
+              key={lead.id}
+              className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
+              onClick={() => setSelectedLead(lead)}
+              style={{ cursor: "pointer" }}
+            >
+              <td className="px-4 py-2">{lead.name}</td>
+              <td className="px-4 py-2">{lead.company}</td>
+              <td className="px-4 py-2">{lead.email}</td>
+              <td className="px-4 py-2">{lead.score}</td>
+              <td className="px-4 py-2">{lead.status}</td>
+              <td className="px-4 py-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setNewOpportunity({
+                      id: lead.id,
+                      name: lead.name,
+                      stage: "Prospecting",
+                      accountName: lead.company,
+                    });
+                  }}
+                  className={`px-4 py-2 rounded-lg bg-blue-600 text-white shadow`}
+                  style={{ cursor: "pointer" }}
+                >
+                  Convert
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     );
-    updateLead(updatedLead);
-    setSelectedLead(null);
+  }
+
+  async function handleUpdateLead(updatedLead: Lead) {
+    try {
+      setLeads((prev) =>
+        prev.map((lead) => (lead.id === updatedLead.id ? updatedLead : lead))
+      );
+      await updateLead(updatedLead);
+      toast.success("Lead updated successfully!");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Unexpected error while updating leads.");
+    } finally {
+      setSelectedLead(null);
+    }
   };
 
-  const convertLead = (opportunity: Opportunity) => {
-    createOpportunity(opportunity!);
-    setNewOpportunity(null);
-  }
+  async function convertLead (opportunity: Opportunity) {
+    try {
+      await createOpportunity(opportunity);
+      toast.success("Lead converted successfully!");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Unexpected error while converting lead.");
+    } finally {
+      setNewOpportunity(null);
+    }
+  };
 
   return (
     <>
@@ -95,46 +190,7 @@ export default function LeadList() {
         </div>
       </header>
       <div className="rounded-lg bg-white p-4 shadow-sm">
-        <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-100 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
-                <th className="px-4 py-2">Name</th>
-                <th className="px-4 py-2">Company</th>
-                <th className="px-4 py-2">Email</th>
-                <th className="px-4 py-2">Score</th>
-                <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredLeads().map((lead) => (
-                <tr
-                  key={lead.id}
-                  className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  onClick={() => setSelectedLead(lead)}
-                  style={{ cursor: "pointer" }}>
-                  <td className="px-4 py-2">{lead.name}</td>
-                  <td className="px-4 py-2">{lead.company}</td>
-                  <td className="px-4 py-2">{lead.email}</td>
-                  <td className="px-4 py-2">{lead.score}</td>
-                  <td className="px-4 py-2">{lead.status}</td>
-                  <td className="px-4 py-2">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setNewOpportunity({id: lead.id, name: lead.name, stage: "Prospecting", accountName: lead.company});
-                      }}
-                      className={`px-4 py-2 rounded-lg bg-blue-600 text-white shadow`}
-                      style={{ cursor: "pointer" }}
-                    >
-                      Convert
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        {renderLeads()}
 
         {selectedLead && (
           <LeadDetails
@@ -154,6 +210,6 @@ export default function LeadList() {
           />
         )}
       </div>
-    </> 
+    </>
   );
 }
