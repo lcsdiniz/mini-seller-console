@@ -23,13 +23,11 @@ export default function SlideOver({
 
   return (
     <>
-      {/* Fundo */}
       <div
         className="fixed inset-0 bg-black opacity-30 z-40"
         onClick={onClose}
       />
 
-      {/* Slide-over */}
       <div className="fixed top-0 right-0 h-full w-1/3 max-w-md bg-white shadow-xl transform transition-transform duration-300 z-50 flex flex-col">
         <div className="p-4 flex justify-between items-center border-b">
           <h2 className="text-lg font-bold">{title}</h2>

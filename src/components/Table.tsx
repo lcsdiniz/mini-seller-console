@@ -45,10 +45,14 @@ export function Table<T>({
             </tr>
           ) : (
             paginatedData.map((row, idx) =>
-              renderRow ? renderRow(row) : (
+              renderRow ? (
+                renderRow(row)
+              ) : (
                 <tr
                   key={(row as any).id ?? idx}
-                  className={`border-b border-gray-200 dark:border-gray-600 ${clickableRows ? "hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer" : ""}`}
+                  className={`border-b border-gray-200 dark:border-gray-600 ${
+                    clickableRows ? "hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer" : ""
+                  }`}
                   onClick={() => clickableRows && onRowClick?.(row)}
                 >
                   {headers.map((header) => (

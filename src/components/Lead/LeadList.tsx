@@ -153,6 +153,7 @@ export default function LeadList() {
             <tr
               key={lead.id}
               className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
+              onClick={() => setSelectedLead(lead)}
             >
               <td className="px-4 py-2">{lead.name}</td>
               <td className="px-4 py-2">{lead.company}</td>
@@ -162,7 +163,7 @@ export default function LeadList() {
               <td className="px-4 py-2">
                 <button
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); // 🔹 impede abrir slide-over
                     setNewOpportunity({
                       id: lead.id,
                       name: lead.name,
