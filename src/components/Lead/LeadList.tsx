@@ -8,7 +8,7 @@ import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../Opportinity/NewOpportunity";
 import { Select } from "../Select";
 import { Button } from "../Button";
-import { leadStatusOptions, leadTableHeaders } from "../../constants";
+import { leadStatusOptions, leadTableHeaders, STORAGE_KEYS } from "../../constants";
 import { leadSortOptions } from "../../constants/lead/selectSort";
 import Header from "../Header";
 
@@ -17,12 +17,18 @@ export default function LeadList() {
   const [loading, setLoading] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  const [statusInput, setStatusInput] = useState("all");
-  const [sortInput, setSortInput] = useState<keyof Lead>("score");
+  const [statusInput, setStatusInput] = useState(() => {
+    const savedStatus = localStorage.getItem(STORAGE_KEYS.leadStatus);
+    return savedStatus || "all";
+  });
+  const [sortInput, setSortInput] = useState<keyof Lead>(() => {
+    const savedSort = localStorage.getItem(STORAGE_KEYS.leadSort);
+    return (savedSort as keyof Lead) || "score";
+  });
 
-  const [appliedSearch, setAppliedSearch] = useState("");
-  const [appliedStatus, setAppliedStatus] = useState("all");
-  const [appliedSort, setAppliedSort] = useState<keyof Lead>("score");
+  const [appliedSearch, setAppliedSearch] = useState(searchInput);
+  const [appliedStatus, setAppliedStatus] = useState(statusInput);
+  const [appliedSort, setAppliedSort] = useState<keyof Lead>(sortInput);
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [newOpportunity, setNewOpportunity] = useState<Opportunity | null>(
@@ -82,6 +88,7 @@ export default function LeadList() {
         prev.map((l) => (l.id === updatedLead.id ? updatedLead : l))
       );
       await updateLead(updatedLead);
+      toast.success("Lead updated successfully.");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to update lead."
@@ -94,6 +101,7 @@ export default function LeadList() {
   async function convertLead(opportunity: Opportunity){
     try {
       await createOpportunity(opportunity);
+      toast.success("Lead converted successfully.");
       setNewOpportunity(null);
     } catch (error) {
       toast.error(
@@ -105,7 +113,9 @@ export default function LeadList() {
   function applyFilters() {
     setAppliedSearch(searchInput);
     setAppliedStatus(statusInput);
+    localStorage.setItem(STORAGE_KEYS.leadStatus, statusInput);
     setAppliedSort(sortInput);
+    localStorage.setItem(STORAGE_KEYS.leadSort, sortInput);
   }
 
   return (

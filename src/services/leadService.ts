@@ -1,14 +1,15 @@
 import type { Lead } from "../types";
 import leadsData from "../assets/leads.json";
+import { STORAGE_KEYS } from "../constants";
 
 export async function getLeads(): Promise<Lead[]> {
   try {
     await new Promise((res) => setTimeout(res, 500));
 
-    const stored = localStorage.getItem('@mini-seller-console:leads');
+    const stored = localStorage.getItem(STORAGE_KEYS.leadsList);
 
     if (!stored) {
-      localStorage.setItem('@mini-seller-console:leads', JSON.stringify(leadsData));
+      localStorage.setItem(STORAGE_KEYS.leadsList, JSON.stringify(leadsData));
       return leadsData;
     }
 
@@ -28,7 +29,7 @@ export async function updateLead(updated: Lead) {
       throw new Error("Random failure while updating lead.");
     }
 
-    const stored = localStorage.getItem('@mini-seller-console:leads');
+    const stored = localStorage.getItem(STORAGE_KEYS.leadsList);
     if (!stored) {
       throw new Error("No leads found in storage.");
     }
@@ -41,7 +42,7 @@ export async function updateLead(updated: Lead) {
     }
 
     leads[index] = { ...leads[index], ...updated };
-    localStorage.setItem('@mini-seller-console:leads', JSON.stringify(leads));
+    localStorage.setItem(STORAGE_KEYS.leadsList, JSON.stringify(leads));
 
     return leads[index];
   } catch (err) {
