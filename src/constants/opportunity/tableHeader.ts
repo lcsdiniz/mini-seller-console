@@ -3,5 +3,4 @@ export const opportunityTableHeaders = [
   { key: "accountName", label: "Account Name" },
   { key: "stage", label: "Stage" },
   { key: "amount", label: "Amount" },
-  { key: "actions", label: "Actions" },
 ];
