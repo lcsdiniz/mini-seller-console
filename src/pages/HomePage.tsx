@@ -3,7 +3,7 @@ import AppRoutes from "../routes/AppRoutes";
 
 export default function HomePage() {
   const location = useLocation();
-console.log(location.pathname)
+  
   return (
     <div className="flex h-screen bg-gray-100">
       <aside className="w-64 bg-white shadow-md flex flex-col">

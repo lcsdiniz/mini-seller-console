@@ -5,17 +5,17 @@ import { Select } from "../Select";
 import { leadStatusOptions } from "../../constants";
 
 type LeadDetailsProps = {
-  lead: Lead;
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: (updatedLead: Lead) => void;
+  readonly lead: Lead;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onUpdate: (updatedLead: Lead) => void;
 };
 
 export function LeadDetails({
   lead,
   isOpen,
   onClose,
-  onSave,
+  onUpdate,
 }: LeadDetailsProps) {
   const [editingLead, setEditingLead] = useState<Lead>(lead);
   const [error, setError] = useState("");
@@ -28,13 +28,13 @@ export function LeadDetails({
     setError(!validateEmail(value) ? "Email inválido!" : "");
   };
 
-  const saveEditing = () => {
+  const editLead = () => {
     if (!validateEmail(editingLead.email)) return;
-    onSave(editingLead);
+    onUpdate(editingLead);
     onClose();
   };
 
-  const isSaveDisabled =
+  const isUpdateDisabled =
     !editingLead ||
     error !== "" ||
     (editingLead.email === lead.email && editingLead.status === lead.status);
@@ -43,9 +43,9 @@ export function LeadDetails({
     <SlideOver
       isOpen={isOpen}
       onClose={onClose}
-      onSave={saveEditing}
+      onEdit={editLead}
       title="Lead Details"
-      isSaveDisabled={isSaveDisabled}
+      isUpdateDisabled={isUpdateDisabled}
     >
       <div className="space-y-4">
         <p>

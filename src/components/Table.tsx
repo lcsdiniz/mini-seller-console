@@ -29,11 +29,11 @@ export function Table<T>({
 
   return (
     <div>
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse rounded shadow overflow-hidden">
         <thead>
           <tr className="bg-gray-100 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
             {headers.map((header) => (
-              <th key={header} className="px-4 py-2 capitalize">{header.label}</th>
+              <th key={header.key} className="px-4 py-2 capitalize">{header.label}</th>
             ))}
           </tr>
         </thead>
@@ -52,7 +52,7 @@ export function Table<T>({
                 <tr
                   key={(row as any).id ?? idx}
                   className={`border-b border-gray-200 dark:border-gray-600 ${
-                    clickableRows ? "hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer" : ""
+                    clickableRows ? "hover:bg-white dark:hover:bg-gray-800 cursor-pointer" : ""
                   }`}
                   onClick={() => clickableRows && onRowClick?.(row)}
                 >
@@ -71,17 +71,17 @@ export function Table<T>({
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
-            className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
+            className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50 cursor-pointer hover:bg-gray-600 transition disabled:cursor-not-allowed"
           >
             Previous
           </button>
-          <span>
+          <span className="text-gray-300">
             Page {currentPage} of {totalPages}
           </span>
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
-            className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50"
+            className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50 cursor-pointer hover:bg-gray-600 transition"
           >
             Next
           </button>

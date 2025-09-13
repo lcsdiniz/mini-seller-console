@@ -1,59 +1,87 @@
-import type { ReactNode } from "react";
+import { useState, useEffect } from "react";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 type SlideOverProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onSave: () => void;
-  title?: string;
-  children: ReactNode;
-  isSaveDisabled?: boolean;
-  saveText?: string;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onEdit: () => void;
+  readonly title?: string;
+  readonly children: React.ReactNode;
+  readonly isUpdateDisabled?: boolean;
 };
 
 export default function SlideOver({
   isOpen,
   onClose,
-  onSave,
+  onEdit,
   title,
   children,
-  isSaveDisabled = false,
-  saveText = "Save",
+  isUpdateDisabled = false,
 }: SlideOverProps) {
-  if (!isOpen) return null;
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) setShow(true);
+  }, [isOpen]);
+
+  function handleClose() {
+    setShow(false);
+    setTimeout(() => onClose(), 500);
+  }
+
+  if (!isOpen && !show) return null;
 
   return (
     <>
       <div
-        className="fixed inset-0 bg-black opacity-30 z-40"
-        onClick={onClose}
+        className={`fixed inset-0 bg-white/50 transition-opacity duration-500 ${
+          show ? "opacity-100" : "opacity-0"
+        }`}
+        onClick={(e) => {
+          handleClose()
+          e.stopPropagation()
+        }}
       />
 
-      <div className="fixed top-0 right-0 h-full w-1/3 max-w-md bg-white shadow-xl transform transition-transform duration-300 z-50 flex flex-col">
-        <div className="p-4 flex justify-between items-center border-b">
-          <h2 className="text-lg font-bold">{title}</h2>
-          <button className="text-gray-500 hover:text-gray-700" onClick={onClose}>
-            Close
-          </button>
-        </div>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="pointer-events-auto fixed inset-y-0 right-0 flex max-w-full">
+            <div
+              className={`
+                fixed top-0 right-0 h-full w-full sm:w-3/4 md:w-1/2 lg:w-1/4 
+                bg-white shadow-xl flex flex-col transition-transform duration-300
+                ${show ? "translate-x-0" : "translate-x-full"}
+              `}
+            >
+              <div className="p-4 flex justify-between items-center border-b">
+                <h2 className="text-lg font-bold">{title}</h2>
+                <button
+                  className="p-2 rounded hover:bg-gray-100 cursor-pointer"
+                  onClick={handleClose}
+                >
+                  <XMarkIcon className="h-5 w-5 text-gray-600" />
+                </button>
+              </div>
 
-        <div className="p-4 flex-1 overflow-auto">{children}</div>
+              <div className="p-4 flex-1 overflow-auto">{children}</div>
 
-        <div className="p-4 border-t flex gap-2 justify-end">
-          <button
-            className={`px-4 py-2 rounded font-semibold transition-colors duration-200
-              text-white bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed`}
-            onClick={onSave}
-            disabled={isSaveDisabled}
-          >
-            {saveText}
-          </button>
-          <button
-            className="px-4 py-2 rounded font-semibold transition-colors duration-200
-              bg-gray-300 hover:bg-gray-400"
-            onClick={onClose}
-          >
-            Cancel
-          </button>
+              <div className="p-4 border-t flex gap-2 justify-end">
+                <button
+                  className={`px-4 py-2 rounded font-semibold text-white bg-blue-500 hover:bg-blue-600 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors duration-200`}
+                  onClick={onEdit}
+                  disabled={isUpdateDisabled}
+                >
+                  Update
+                </button>
+                <button
+                  className="px-4 py-2 rounded font-semibold bg-gray-300 hover:bg-gray-400 cursor-pointer transition-colors duration-200"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

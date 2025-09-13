@@ -5,7 +5,7 @@ interface SkeletonTableProps {
 
 export default function SkeletonTable({ rows = 5, headers }: SkeletonTableProps) {
   return (
-    <table className="w-full border-collapse">
+    <table className="w-full border-collapse rounded shadow overflow-hidden">
       <thead>
         <tr className="bg-gray-100 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
           {headers.map((header) => (

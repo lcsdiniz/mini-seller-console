@@ -187,7 +187,7 @@ export default function LeadList() {
           lead={selectedLead}
           isOpen={!!selectedLead}
           onClose={() => setSelectedLead(null)}
-          onSave={handleUpdateLead}
+          onUpdate={handleUpdateLead}
         />
       )}
 
