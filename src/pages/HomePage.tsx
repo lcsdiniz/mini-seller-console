@@ -7,8 +7,10 @@ export default function HomePage() {
   return (
     <div className="flex h-screen bg-gray-100">
       <aside className="w-64 bg-white shadow-md flex flex-col">
-        <div className="px-6 py-4 border-b">
-          <h1 className="text-lg font-bold text-gray-800">Mini Seller Console</h1>
+        <div className="px-6 py-4 border-b flex items-center gap-1">
+          <h1 className="text-lg font-bold text-gray-800">
+            Mini Seller Console
+          </h1>
         </div>
 
         <nav className="flex flex-col gap-1 p-4 space-y-2">
@@ -16,7 +18,7 @@ export default function HomePage() {
             <div
               className={`w-full text-left px-4 py-2 rounded-lg cursor-pointer ${
                 location.pathname === "/" ||  location.pathname === "/leads"
-                  ? "bg-blue-600 text-white shadow"
+                  ? "bg-blue-600 text-white shadow font-semibold"
                   : "text-gray-700 hover:bg-gray-100"
               }`}
             >
@@ -27,7 +29,7 @@ export default function HomePage() {
             <div
               className={`w-full text-left px-4 py-2 rounded-lg cursor-pointer ${
                 location.pathname === "/opportunities"
-                  ? "bg-blue-600 text-white shadow"
+                  ? "bg-blue-600 text-white shadow font-semibold"
                   : "text-gray-700 hover:bg-gray-100"
               }`}
             >
