@@ -84,10 +84,10 @@ export default function LeadList() {
 
   async function handleUpdateLead(updatedLead: Lead) {
     try {
+      await updateLead(updatedLead);
       setLeads((prev) =>
         prev.map((l) => (l.id === updatedLead.id ? updatedLead : l))
       );
-      await updateLead(updatedLead);
       toast.success("Lead updated successfully.");
     } catch (error) {
       toast.error(

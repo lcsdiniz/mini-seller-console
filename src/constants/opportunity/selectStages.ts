@@ -1,4 +1,4 @@
-import type { SelectOption } from "../select";
+import type { SelectOption } from "../../types";
 
 export const OpportunityStage = {
   All: "all",

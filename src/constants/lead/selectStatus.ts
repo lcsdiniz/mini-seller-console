@@ -1,10 +1,10 @@
-import type { SelectOption } from "../select";
+import type { SelectOption } from "../../types";
 
 export const LeadStatus = {
-  New: "new",
-  Contacted: "contacted",
-  Qualified: "qualified",
-  Lost: "lost",
+  New: "New",
+  Contacted: "Contacted",
+  Qualified: "Qualified",
+  Lost: "Lost",
 };
 
 export type LeadStatus = typeof LeadStatus[keyof typeof LeadStatus];
