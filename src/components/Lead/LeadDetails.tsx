@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { Lead } from "../../types";
 import SlideOver from "../SlideOver";
+import { leadStatusOptions } from "../../constants/select";
+import { Select } from "../Select";
 
 type LeadDetailsProps = {
   lead: Lead;
@@ -9,7 +11,12 @@ type LeadDetailsProps = {
   onSave: (updatedLead: Lead) => void;
 };
 
-export function LeadDetails({ lead, isOpen, onClose, onSave }: LeadDetailsProps) {
+export function LeadDetails({
+  lead,
+  isOpen,
+  onClose,
+  onSave,
+}: LeadDetailsProps) {
   const [editingLead, setEditingLead] = useState<Lead>(lead);
   const [error, setError] = useState("");
 
@@ -41,8 +48,12 @@ export function LeadDetails({ lead, isOpen, onClose, onSave }: LeadDetailsProps)
       isSaveDisabled={isSaveDisabled}
     >
       <div className="space-y-4">
-        <p><strong>Name:</strong> {lead.name}</p>
-        <p><strong>Company:</strong> {lead.company}</p>
+        <p>
+          <strong>Name:</strong> {lead.name}
+        </p>
+        <p>
+          <strong>Company:</strong> {lead.company}
+        </p>
 
         <div>
           <strong>Email:</strong>
@@ -50,26 +61,24 @@ export function LeadDetails({ lead, isOpen, onClose, onSave }: LeadDetailsProps)
             type="text"
             value={editingLead?.email ?? ""}
             onChange={(e) => handleEmailChange(e.target.value)}
-            className={`border rounded px-2 py-1 w-full mt-1 ${error ? "border-red-500" : ""}`}
+            className={`border rounded px-2 py-1 w-full mt-1 ${
+              error ? "border-red-500" : ""
+            }`}
           />
           {error && <p className="text-red-500 mt-1">{error}</p>}
         </div>
 
-        <div>
-          <strong>Status:</strong>
-          <select
-            value={editingLead?.status ?? ""}
-            onChange={(e) =>
-              setEditingLead((prev) => (prev ? { ...prev, status: e.target.value } : prev))
-            }
-            className="border rounded px-2 py-1 w-full mt-1"
-          >
-            <option value="New">New</option>
-            <option value="Contacted">Contacted</option>
-            <option value="Qualified">Qualified</option>
-            <option value="Lost">Lost</option>
-          </select>
-        </div>
+        <Select
+          type="form"
+          label="Status"
+          options={leadStatusOptions}
+          value={editingLead?.status ?? ""}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setEditingLead((prev) =>
+              prev ? { ...prev, status: e.target.value } : prev
+            )
+          }
+        />
       </div>
     </SlideOver>
   );

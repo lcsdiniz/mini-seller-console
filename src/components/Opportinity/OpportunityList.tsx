@@ -4,6 +4,7 @@ import { getOpportunities } from "../../services/opportunityService";
 import toast from "react-hot-toast";
 import { Table } from "../Table";
 import { opportunityTableHeaders } from "../../constants/table";
+import { Button } from "../Button";
 
 export default function OpportunityList() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
@@ -97,16 +98,14 @@ export default function OpportunityList() {
           <option value="stage">Stage</option>
         </select>
 
-        <button
+        <Button
+          label="Apply"
           onClick={() => {
             setAppliedSearch(searchInput);
             setAppliedFilter(filterInput);
             setAppliedSort(sortInput);
           }}
-          className="px-4 py-2 bg-blue-600 text-white rounded shadow"
-        >
-          Apply
-        </button>
+        />
       </header>
 
       {loading ? (

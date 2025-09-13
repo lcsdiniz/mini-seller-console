@@ -7,6 +7,9 @@ import { Table } from "../Table";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../Opportinity/NewOpportunity";
 import { leadTableHeaders } from "../../constants/table";
+import { Select } from "../Select";
+import { leadSortOptions, leadStatusOptions } from "../../constants";
+import { Button } from "../Button";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -108,38 +111,29 @@ export default function LeadList() {
           onChange={(e) => setSearchInput(e.target.value)}
           className="px-3 py-2 border rounded shadow w-1/2"
         />
-
-        <select
+        
+        <Select
+          type="filter"
+          options={leadStatusOptions}
           value={filterInput}
-          onChange={(e) => setFilterInput(e.target.value)}
-          className="px-3 py-2 border rounded shadow"
-        >
-          <option value="all">All Status</option>
-          <option value="new">New</option>
-          <option value="contacted">Contacted</option>
-          <option value="qualified">Qualified</option>
-        </select>
-
-        <select
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterInput(e.target.value)}
+        />
+        
+        <Select
+          type="filter"
+          options={leadSortOptions}
           value={sortInput}
-          onChange={(e) => setSortInput(e.target.value as keyof Lead)}
-          className="px-3 py-2 border rounded shadow"
-        >
-          <option value="score">Score (desc)</option>
-          <option value="name">Name (A-Z)</option>
-          <option value="company">Company (A-Z)</option>
-        </select>
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortInput(e.target.value as keyof Lead)}
+        />
 
-        <button
+        <Button
+          label="Apply"
           onClick={() => {
             setAppliedSearch(searchInput);
             setAppliedFilter(filterInput);
             setAppliedSort(sortInput);
           }}
-          className="px-4 py-2 bg-blue-600 text-white rounded shadow"
-        >
-          Apply
-        </button>
+        />
       </header>
 
       {loading ? (
@@ -162,9 +156,10 @@ export default function LeadList() {
               <td className="px-4 py-2">{lead.score}</td>
               <td className="px-4 py-2">{lead.status}</td>
               <td className="px-4 py-2">
-                <button
+                <Button
+                  label="Convert"
                   onClick={(e) => {
-                    e.stopPropagation(); // 🔹 impede abrir slide-over
+                    e.stopPropagation();
                     setNewOpportunity({
                       id: lead.id,
                       name: lead.name,
@@ -172,10 +167,7 @@ export default function LeadList() {
                       accountName: lead.company,
                     });
                   }}
-                  className="px-4 py-2 bg-blue-600 text-white rounded shadow"
-                >
-                  Convert
-                </button>
+                />
               </td>
             </tr>
           )}
