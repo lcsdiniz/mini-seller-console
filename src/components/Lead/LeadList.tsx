@@ -6,21 +6,20 @@ import { createOpportunity } from "../../services/opportunityService";
 import { Table } from "../Table";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../Opportinity/NewOpportunity";
-import { leadTableHeaders } from "../../constants/table";
 import { Select } from "../Select";
-import { leadSortOptions, leadStatusOptions } from "../../constants";
 import { Button } from "../Button";
+import { leadStatusOptions, leadTableHeaders, sortOptions } from "../../constants";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  const [filterInput, setFilterInput] = useState("all");
+  const [statusInput, setStatusInput] = useState("all");
   const [sortInput, setSortInput] = useState<keyof Lead>("score");
 
   const [appliedSearch, setAppliedSearch] = useState("");
-  const [appliedFilter, setAppliedFilter] = useState("all");
+  const [appliedStatus, setAppliedStatus] = useState("all");
   const [appliedSort, setAppliedSort] = useState<keyof Lead>("score");
 
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -59,9 +58,9 @@ export default function LeadList() {
       );
     }
 
-    if (appliedFilter !== "all") {
+    if (appliedStatus !== "all") {
       filtered = filtered.filter(
-        (lead) => lead.status.toLowerCase() === appliedFilter
+        (lead) => lead.status.toLowerCase() === appliedStatus
       );
     }
 
@@ -73,7 +72,7 @@ export default function LeadList() {
     });
 
     return filtered;
-  }, [leads, appliedSearch, appliedFilter, appliedSort]);
+  }, [leads, appliedSearch, appliedStatus, appliedSort]);
 
   const handleUpdateLead = async (updatedLead: Lead) => {
     try {
@@ -115,13 +114,13 @@ export default function LeadList() {
         <Select
           type="filter"
           options={leadStatusOptions}
-          value={filterInput}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterInput(e.target.value)}
+          value={statusInput}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusInput(e.target.value)}
         />
         
         <Select
           type="filter"
-          options={leadSortOptions}
+          options={sortOptions}
           value={sortInput}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortInput(e.target.value as keyof Lead)}
         />
@@ -130,7 +129,7 @@ export default function LeadList() {
           label="Apply"
           onClick={() => {
             setAppliedSearch(searchInput);
-            setAppliedFilter(filterInput);
+            setAppliedStatus(statusInput);
             setAppliedSort(sortInput);
           }}
         />

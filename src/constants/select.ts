@@ -3,32 +3,16 @@ export type SelectOption = {
   value: string;
 };
 
-export const LeadStatus = {
-  New: "new",
-  Contacted: "contacted",
-  Qualified: "qualified",
-  Lost: "lost",
-};
-
-export type LeadStatus = typeof LeadStatus[keyof typeof LeadStatus];
-
-export const leadStatusOptions: SelectOption[] = [
-  { label: "All Status", value: "all" },
-  { label: "New", value: LeadStatus.New },
-  { label: "Contacted", value: LeadStatus.Contacted },
-  { label: "Qualified", value: LeadStatus.Qualified },
-];
-
-export const LeadSort = {
+export const Sort = {
   Score: "score",
   Name: "name",
   Company: "company",
 } as const;
 
-export type LeadSort = typeof LeadSort[keyof typeof LeadSort];
+export type Sort = typeof Sort[keyof typeof Sort];
 
-export const leadSortOptions: SelectOption[] = [
-  { label: "Score (desc)", value: LeadSort.Score },
-  { label: "Name (A-Z)", value: LeadSort.Name },
-  { label: "Company (A-Z)", value: LeadSort.Company },
+export const sortOptions: SelectOption[] = [
+  { label: "Score (desc)", value: Sort.Score },
+  { label: "Name (A-Z)", value: Sort.Name },
+  { label: "Company (A-Z)", value: Sort.Company },
 ];

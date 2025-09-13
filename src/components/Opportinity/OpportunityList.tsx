@@ -3,15 +3,16 @@ import type { Opportunity } from "../../types";
 import { getOpportunities } from "../../services/opportunityService";
 import toast from "react-hot-toast";
 import { Table } from "../Table";
-import { opportunityTableHeaders } from "../../constants/table";
 import { Button } from "../Button";
+import { Select } from "../Select";
+import { opportunityStageOptions, opportunityTableHeaders, sortOptions } from "../../constants";
 
 export default function OpportunityList() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  const [filterInput, setFilterInput] = useState("all");
+  const [stageInput, setStageInput] = useState("all");
   const [sortInput, setSortInput] = useState<keyof Opportunity>("stage");
 
   const [appliedSearch, setAppliedSearch] = useState("");
@@ -76,33 +77,25 @@ export default function OpportunityList() {
           className="px-3 py-2 border rounded shadow w-1/2"
         />
 
-        <select
-          value={filterInput}
-          onChange={(e) => setFilterInput(e.target.value)}
-          className="px-3 py-2 border rounded shadow"
-        >
-          <option value="all">All Stages</option>
-          <option value="Prospecting">Prospecting</option>
-          <option value="Negotiation">Negotiation</option>
-          <option value="Closed Won">Closed Won</option>
-          <option value="Closed Lost">Closed Lost</option>
-        </select>
+        <Select
+          type="filter"
+          options={opportunityStageOptions}
+          value={stageInput}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStageInput(e.target.value as keyof Opportunity)}
+        />
 
-        <select
+        <Select
+          type="filter"
+          options={sortOptions}
           value={sortInput}
-          onChange={(e) => setSortInput(e.target.value as keyof Opportunity)}
-          className="px-3 py-2 border rounded shadow"
-        >
-          <option value="name">Name (A-Z)</option>
-          <option value="accountName">Account Name (A-Z)</option>
-          <option value="stage">Stage</option>
-        </select>
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortInput(e.target.value as keyof Opportunity)}
+        />
 
         <Button
           label="Apply"
           onClick={() => {
             setAppliedSearch(searchInput);
-            setAppliedFilter(filterInput);
+            setAppliedFilter(stageInput);
             setAppliedSort(sortInput);
           }}
         />
