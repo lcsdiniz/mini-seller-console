@@ -155,7 +155,7 @@ export default function LeadList() {
           renderRow={(lead: Lead) => (
             <tr
               key={lead.id}
-              className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
+              className="border-b border-gray-200 bg-white hover:bg-gray-100 cursor-pointer"
               onClick={() => setSelectedLead(lead)}
             >
               <td className="px-4 py-2">{lead.name}</td>

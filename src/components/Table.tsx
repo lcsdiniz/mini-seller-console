@@ -31,7 +31,7 @@ export function Table<T>({
     <div>
       <table className="w-full border-collapse rounded shadow overflow-hidden">
         <thead>
-          <tr className="bg-gray-100 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
+          <tr className="bg-gray-50 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
             {headers.map((header) => (
               <th key={header.key} className="px-4 py-2 capitalize">{header.label}</th>
             ))}
@@ -67,7 +67,7 @@ export function Table<T>({
       </table>
 
       {totalPages > 1 && (
-        <div className="flex justify-between items-center mt-2 text-gray-200">
+        <div className="flex justify-between items-center mt-2 text-gray-200 mt-8">
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
