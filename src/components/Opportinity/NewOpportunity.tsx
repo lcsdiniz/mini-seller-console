@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import type { Opportunity } from "../types";
-import SlideOver from "./SlideOver";
+import type { Opportunity } from "../../types";
+import SlideOver from "../SlideOver";
 
 type NewOpportunityProps = {
   isOpen: boolean;

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LeadList from "../components/LeadList";
-import OpportunityList from "../components/OpportunityList";
+import LeadList from "../components/Lead/LeadList";
+import OpportunityList from "../components/Opportinity/OpportunityList";
 
 export default function HomePage() {
   const [view, setView] = useState<"leads" | "opportunities">("leads");

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { Lead } from "../types";
-import SlideOver from "./SlideOver";
+import type { Lead } from "../../types";
+import SlideOver from "../SlideOver";
 
 type LeadDetailsProps = {
   lead: Lead;
