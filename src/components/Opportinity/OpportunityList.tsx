@@ -7,6 +7,7 @@ import { Select } from "../Select";
 import { opportunityStageOptions, opportunityTableHeaders } from "../../constants";
 import { opportunituSortOptions } from "../../constants/opportunity/selectSort";
 import Header from "../Header";
+import SkeletonTable from "../SkeletonTable";
 
 export default function OpportunityList() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
@@ -97,7 +98,9 @@ export default function OpportunityList() {
       </Header>
 
       {loading ? (
-        <p>Loading...</p>
+        <SkeletonTable
+          headers={opportunityTableHeaders.map(h => h.label)}
+        />
       ) : (
         <Table
           headers={opportunityTableHeaders}
@@ -106,7 +109,7 @@ export default function OpportunityList() {
           renderRow={(opp: Opportunity) => (
             <tr
               key={opp.id}
-              className="border-b border-gray-200 hover:bg-gray-50 cursor-pointer"
+              className="border-b border-gray-200 hover:bg-gray-50"
             >
               <td className="px-4 py-2">{opp.name}</td>
               <td className="px-4 py-2">{opp.accountName}</td>

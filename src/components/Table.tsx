@@ -17,7 +17,7 @@ export function Table<T>({
   clickableRows,
   onRowClick,
   renderRow,
-}: TableProps<T>) {
+}: Readonly<TableProps<T>>) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(data.length / pageSize);

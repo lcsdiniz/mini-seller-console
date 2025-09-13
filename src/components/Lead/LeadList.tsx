@@ -11,6 +11,7 @@ import { Button } from "../Button";
 import { leadStatusOptions, leadTableHeaders, STORAGE_KEYS } from "../../constants";
 import { leadSortOptions } from "../../constants/lead/selectSort";
 import Header from "../Header";
+import SkeletonTable from "../SkeletonTable";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -142,7 +143,9 @@ export default function LeadList() {
       </Header>
 
       {loading ? (
-        <p>Loading...</p>
+        <SkeletonTable
+          headers={leadTableHeaders.map(h => h.label)}
+        />
       ) : (
         <Table
           headers={leadTableHeaders}
