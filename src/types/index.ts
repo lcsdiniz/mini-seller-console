@@ -1,4 +1,4 @@
-export interface Lead {
+export type Lead = {
   id: number;
   name: string;
   company: string;
@@ -8,10 +8,15 @@ export interface Lead {
   status: string;
 }
 
-export interface Opportunity {
+export type Opportunity = {
   id: number;
   name: string;
   stage: string;
   amount?: number;
   accountName: string;
+}
+
+export type TableHeader = {
+  key: string;
+  label: string;
 }

@@ -6,6 +6,7 @@ import { createOpportunity } from "../../services/opportunityService";
 import { Table } from "../Table";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../Opportinity/NewOpportunity";
+import { leadTableHeaders } from "../../constants/table";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -145,7 +146,7 @@ export default function LeadList() {
         <p>Loading...</p>
       ) : (
         <Table
-          headers={["name", "company", "email", "score", "status", "actions"]}
+          headers={leadTableHeaders}
           data={processedData}
           clickableRows
           onRowClick={setSelectedLead}

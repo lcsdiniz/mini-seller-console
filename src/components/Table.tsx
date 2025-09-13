@@ -1,7 +1,8 @@
 import { useState, useMemo, type JSX } from "react";
+import type { TableHeader } from "../types";
 
 interface TableProps<T> {
-  headers: string[];
+  headers: TableHeader[];
   data: T[];
   pageSize?: number;
   clickableRows?: boolean;
@@ -32,7 +33,7 @@ export function Table<T>({
         <thead>
           <tr className="bg-gray-100 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
             {headers.map((header) => (
-              <th key={header} className="px-4 py-2">{header}</th>
+              <th key={header} className="px-4 py-2 capitalize">{header.label}</th>
             ))}
           </tr>
         </thead>
@@ -56,7 +57,7 @@ export function Table<T>({
                   onClick={() => clickableRows && onRowClick?.(row)}
                 >
                   {headers.map((header) => (
-                    <td key={header} className="px-4 py-2">{(row as any)[header]}</td>
+                    <td key={header} className="px-4 py-2">{(row as any)[header.key]}</td>
                   ))}
                 </tr>
               )

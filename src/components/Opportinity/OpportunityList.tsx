@@ -3,6 +3,7 @@ import type { Opportunity } from "../../types";
 import { getOpportunities } from "../../services/opportunityService";
 import toast from "react-hot-toast";
 import { Table } from "../Table";
+import { opportunityTableHeaders } from "../../constants/table";
 
 export default function OpportunityList() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
@@ -112,7 +113,7 @@ export default function OpportunityList() {
         <p>Loading...</p>
       ) : (
         <Table
-          headers={["name", "accountName", "stage", "amount", "actions"]}
+          headers={opportunityTableHeaders}
           data={processedData}
           clickableRows
           renderRow={(opp: Opportunity) => (
