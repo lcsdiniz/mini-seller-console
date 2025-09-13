@@ -8,7 +8,9 @@ import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../Opportinity/NewOpportunity";
 import { Select } from "../Select";
 import { Button } from "../Button";
-import { leadStatusOptions, leadTableHeaders, sortOptions } from "../../constants";
+import { leadStatusOptions, leadTableHeaders } from "../../constants";
+import { leadSortOptions } from "../../constants/lead/selectSort";
+import Header from "../Header";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -74,7 +76,7 @@ export default function LeadList() {
     return filtered;
   }, [leads, appliedSearch, appliedStatus, appliedSort]);
 
-  const handleUpdateLead = async (updatedLead: Lead) => {
+  async function handleUpdateLead(updatedLead: Lead) {
     try {
       setLeads((prev) =>
         prev.map((l) => (l.id === updatedLead.id ? updatedLead : l))
@@ -89,7 +91,7 @@ export default function LeadList() {
     }
   };
 
-  const convertLead = async (opportunity: Opportunity) => {
+  async function convertLead(opportunity: Opportunity){
     try {
       await createOpportunity(opportunity);
       setNewOpportunity(null);
@@ -100,40 +102,34 @@ export default function LeadList() {
     }
   };
 
+  function applyFilters() {
+    setAppliedSearch(searchInput);
+    setAppliedStatus(statusInput);
+    setAppliedSort(sortInput);
+  }
+
   return (
     <>
-      <header className="flex gap-4 mb-4">
-        <input
-          type="text"
-          placeholder="Search leads..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="px-3 py-2 border rounded shadow w-1/2"
-        />
-        
+      <Header
+        searchPlaceholder="Search leads..."
+        searchValue={searchInput}
+        onChangeSearch={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+        applyFilters={applyFilters}
+      >
         <Select
-          type="filter"
+          type="header"
           options={leadStatusOptions}
           value={statusInput}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusInput(e.target.value)}
         />
         
         <Select
-          type="filter"
-          options={sortOptions}
+          type="header"
+          options={leadSortOptions}
           value={sortInput}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortInput(e.target.value as keyof Lead)}
         />
-
-        <Button
-          label="Apply"
-          onClick={() => {
-            setAppliedSearch(searchInput);
-            setAppliedStatus(statusInput);
-            setAppliedSort(sortInput);
-          }}
-        />
-      </header>
+      </Header>
 
       {loading ? (
         <p>Loading...</p>

@@ -20,3 +20,8 @@ export type TableHeader = {
   key: string;
   label: string;
 }
+
+export type SelectOption = {
+  label: string;
+  value: string;
+};

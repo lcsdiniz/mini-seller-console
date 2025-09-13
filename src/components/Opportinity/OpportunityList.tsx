@@ -3,9 +3,10 @@ import type { Opportunity } from "../../types";
 import { getOpportunities } from "../../services/opportunityService";
 import toast from "react-hot-toast";
 import { Table } from "../Table";
-import { Button } from "../Button";
 import { Select } from "../Select";
-import { opportunityStageOptions, opportunityTableHeaders, sortOptions } from "../../constants";
+import { opportunityStageOptions, opportunityTableHeaders } from "../../constants";
+import { opportunituSortOptions } from "../../constants/opportunity/selectSort";
+import Header from "../Header";
 
 export default function OpportunityList() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
@@ -16,7 +17,7 @@ export default function OpportunityList() {
   const [sortInput, setSortInput] = useState<keyof Opportunity>("stage");
 
   const [appliedSearch, setAppliedSearch] = useState("");
-  const [appliedFilter, setAppliedFilter] = useState("all");
+  const [appliedStage, setAppliedStage] = useState("all");
   const [appliedSort, setAppliedSort] = useState<keyof Opportunity>("stage");
 
   useEffect(() => {
@@ -50,9 +51,9 @@ export default function OpportunityList() {
       );
     }
 
-    if (appliedFilter !== "all") {
+    if (appliedStage !== "all") {
       filtered = filtered.filter(
-        (opp) => opp.stage.toLowerCase() === appliedFilter
+        (opp) => opp.stage.toLowerCase() === appliedStage
       );
     }
 
@@ -64,42 +65,36 @@ export default function OpportunityList() {
     });
 
     return filtered;
-  }, [opportunities, appliedSearch, appliedFilter, appliedSort]);
+  }, [opportunities, appliedSearch, appliedStage, appliedSort]);
+  
+  function applyFilters() {
+    setAppliedSearch(searchInput);
+    setAppliedStage(stageInput);
+    setAppliedSort(sortInput);
+  }
 
   return (
     <>
-      <header className="flex gap-4 mb-4">
-        <input
-          type="text"
-          placeholder="Search opportunities..."
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          className="px-3 py-2 border rounded shadow w-1/2"
-        />
-
+      <Header
+        searchPlaceholder="Search opportunities..."
+        searchValue={searchInput}
+        onChangeSearch={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+        applyFilters={applyFilters}
+      >
         <Select
-          type="filter"
+          type="header"
           options={opportunityStageOptions}
           value={stageInput}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStageInput(e.target.value as keyof Opportunity)}
         />
 
         <Select
-          type="filter"
-          options={sortOptions}
+          type="header"
+          options={opportunituSortOptions}
           value={sortInput}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortInput(e.target.value as keyof Opportunity)}
         />
-
-        <Button
-          label="Apply"
-          onClick={() => {
-            setAppliedSearch(searchInput);
-            setAppliedFilter(stageInput);
-            setAppliedSort(sortInput);
-          }}
-        />
-      </header>
+      </Header>
 
       {loading ? (
         <p>Loading...</p>

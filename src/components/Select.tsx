@@ -1,7 +1,7 @@
-import type { SelectOption } from "../constants/select";
+import type { SelectOption } from "../types";
 
 interface SelectProps {
-  readonly type: "filter" | "form";
+  readonly type: "header" | "form";
   readonly label?: string;
   readonly options: ReadonlyArray<SelectOption>;
   readonly value: string;
@@ -16,7 +16,7 @@ export function Select({ type, label, onChange, options, value }: SelectProps) {
       <select
         value={value}
         onChange={onChange}
-        className={`rounded border ${type === "filter" ? "px-3 py-2 shadow" : "px-2 py-1 w-full mt-1"}`}
+        className={`rounded border ${type === "header" ? "px-3 py-2 shadow" : "px-2 py-1 w-full mt-1"}`}
       >
         {options.map((option: SelectOption) => (
           <option key={option.value} value={option.value}>
