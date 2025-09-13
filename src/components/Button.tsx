@@ -1,13 +1,15 @@
 interface ButtonProps {
   readonly label: string;
   readonly onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  readonly paddingX?: number;
+  readonly paddingY?: number;
 }
 
-export function Button({ label, onClick }: ButtonProps) {
+export function Button({ label, onClick, paddingX = 4, paddingY = 2 }: ButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 bg-blue-600 text-white rounded shadow cursor-pointer hover:bg-blue-700 transition"
+      className={`px-${paddingX} py-${paddingY} bg-blue-600 text-white rounded shadow cursor-pointer hover:bg-blue-700 transition`}
     >
       {label}
     </button>

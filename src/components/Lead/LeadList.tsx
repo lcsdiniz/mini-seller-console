@@ -166,6 +166,8 @@ export default function LeadList() {
               <td className="px-4 py-2">
                 <Button
                   label="Convert"
+                  paddingX={2}
+                  paddingY={1}
                   onClick={(e) => {
                     e.stopPropagation();
                     setNewOpportunity({
