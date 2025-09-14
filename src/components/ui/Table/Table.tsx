@@ -1,4 +1,4 @@
-import { useState, useMemo, type JSX } from "react";
+import { useState, useMemo, type JSX, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import type { TableHeader } from "@/types";
 
@@ -27,6 +27,10 @@ export function Table<T>({
     const start = (currentPage - 1) * pageSize;
     return data.slice(start, start + pageSize);
   }, [data, currentPage, pageSize]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
 
   return (
     <div>

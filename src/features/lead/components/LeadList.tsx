@@ -65,7 +65,7 @@ export default function LeadList() {
     sort: keyof Lead
   ) {
     let filtered = [...leads];
-
+    
     if (search) {
       filtered = filtered.filter(
         (lead) =>
@@ -86,7 +86,7 @@ export default function LeadList() {
       if (sort === "company") return a.company.localeCompare(b.company);
       return 0;
     });
-
+    console.log(filtered.map(l => l.status));
     return filtered;
   }
 
@@ -172,8 +172,10 @@ export default function LeadList() {
           onRowClick={setSelectedLead}
           renderRow={(lead) => (
             <LeadRow
+              key={lead.id}
               lead={lead}
               onSelect={setSelectedLead}
+              onUpdate={handleUpdateLead}
               onConvert={(lead) =>
                 setNewOpportunity({
                   id: lead.id,
@@ -192,7 +194,6 @@ export default function LeadList() {
           lead={selectedLead}
           isOpen={!!selectedLead}
           onClose={() => setSelectedLead(null)}
-          onUpdate={handleUpdateLead}
         />
       )}
 

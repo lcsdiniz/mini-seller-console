@@ -63,6 +63,7 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
       submitLabel="Create"
       title="New Opportunity"
       isSubmitDisabled={isSaveDisabled}
+      editable
     >
       <div className="space-y-4">
         <div>

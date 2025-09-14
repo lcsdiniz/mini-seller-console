@@ -4,8 +4,10 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 type SlideOverProps = {
   readonly isOpen: boolean;
   readonly onClose: () => void;
-  readonly onSubmit: () => void;
-  readonly submitLabel: string;
+  readonly onSubmit?: () => void;
+  readonly editable?: boolean;
+  readonly closeLabel?: string;
+  readonly submitLabel?: string;
   readonly title?: string;
   readonly children: React.ReactNode;
   readonly isSubmitDisabled?: boolean;
@@ -15,7 +17,9 @@ export default function SlideOver({
   isOpen,
   onClose,
   onSubmit,
-  submitLabel,
+  editable,
+  closeLabel = "Close",
+  submitLabel = "Submit",
   title,
   children,
   isSubmitDisabled = false,
@@ -67,18 +71,20 @@ export default function SlideOver({
               <div className="p-4 flex-1 overflow-auto">{children}</div>
 
               <div className="p-4 border-t flex gap-2 justify-end">
-                <button
-                  className={`px-4 py-2 rounded-md font-semibold text-white bg-blue-500 hover:bg-blue-600 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors duration-200`}
-                  onClick={onSubmit}
-                  disabled={isSubmitDisabled}
-                >
-                  {submitLabel}
-                </button>
+                {editable && onSubmit && (
+                  <button
+                    className={`px-4 py-2 rounded-md font-semibold text-white bg-blue-500 hover:bg-blue-600 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors duration-200`}
+                    onClick={onSubmit}
+                    disabled={isSubmitDisabled}
+                  >
+                    {submitLabel}
+                  </button>
+                )}
                 <button
                   className="px-4 py-2 rounded-md font-semibold bg-gray-300 hover:bg-gray-400 cursor-pointer transition-colors duration-200"
                   onClick={handleClose}
                 >
-                  Cancel
+                  {closeLabel}
                 </button>
               </div>
             </div>
