@@ -1,6 +1,6 @@
-import type { Lead } from "../types";
-import leadsData from "../assets/leads.json";
-import { STORAGE_KEYS } from "../constants";
+import type { Lead } from "../../../types/index";
+import leadsData from "../../../assets/leads.json";
+import { STORAGE_KEYS } from "../../../constants/index";
 
 export async function getLeads(): Promise<Lead[]> {
   try {

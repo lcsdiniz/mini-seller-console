@@ -1,5 +1,5 @@
-import { STORAGE_KEYS } from "../constants";
-import type { Opportunity } from "../types";
+import { STORAGE_KEYS } from "../../../constants/index";
+import type { Opportunity } from "../../../types/index";
 
 export async function createOpportunity(opportunity: Opportunity) {
   try {
