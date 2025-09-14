@@ -1,21 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Lead, Opportunity } from "../../../types";
-import { getLeads, updateLead } from "../../../features/lead/services/leadService";
+import type { Lead, Opportunity } from "@/types";
+import { getLeads, updateLead } from "@/features/lead/services/leadService";
 import toast from "react-hot-toast";
-import { createOpportunity } from "../../../features/opportunity/services/opportunityService";
-import { Table } from "../../../components/ui/Table/Table";
+import { createOpportunity } from "@/features/opportunity/services/opportunityService";
+import { Table } from "@/components/ui/Table/Table";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../../opportunity/components/NewOpportunity";
-import { Select } from "../../../components/ui/Select";
-import { Button } from "../../../components/ui/Button";
+import { Select } from "@/components/ui/Select";
+import { Button } from "@/components/ui/Button";
 import {
   leadStatusOptions,
   leadTableHeaders,
 } from "../constants";
 import { leadSortOptions } from "../constants/selectSort";
-import Header from "../../../components/layout/Header";
-import SkeletonTable from "../../../components/ui/Table/SkeletonTable";
-import { STORAGE_KEYS } from "../../../constants/storage/keys";
+import Header from "@/components/layout/Header";
+import SkeletonTable from "@/components/ui/Table/SkeletonTable";
+import { STORAGE_KEYS } from "@/constants/storage/keys";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);

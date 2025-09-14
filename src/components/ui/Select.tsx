@@ -1,4 +1,4 @@
-import type { SelectOption } from "../types";
+import type { SelectOption } from "@/types";
 
 interface SelectProps {
   readonly type: "header" | "form";
