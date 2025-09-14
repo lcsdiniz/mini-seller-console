@@ -31,9 +31,9 @@ export function LeadRow({ lead, onSelect, onConvert, onUpdate }: LeadRowProps) {
       onClick={() => onSelect(lead)}
     >
       <td className="px-4 py-2">{lead.name}</td>
-      <td className="px-4 py-2 hidden md:table-cell">{lead.company}</td>
-      <td className="px-4 py-2 hidden lg:table-cell">
-        <td className="px-4 py-2 hidden lg:table-cell">
+      <td className="px-4 py-2 hidden lg:table-cell">{lead.company}</td>
+      <td className="px-4 py-2">
+        <td className="px-4 py-2">
           <EditableEmail
             value={lead.email}
             onSave={(newEmail) => onUpdate({ ...lead, email: newEmail })}

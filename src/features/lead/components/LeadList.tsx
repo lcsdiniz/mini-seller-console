@@ -13,6 +13,7 @@ import Header from "@/components/layout/Header";
 import SkeletonTable from "@/components/ui/Table/SkeletonTable";
 import { STORAGE_KEYS } from "@/constants/storage/keys";
 import { LeadRow } from "./LeadRow";
+import { LeadCard } from "./LeadCard";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -65,7 +66,7 @@ export default function LeadList() {
     sort: keyof Lead
   ) {
     let filtered = [...leads];
-    
+
     if (search) {
       filtered = filtered.filter(
         (lead) =>
@@ -86,7 +87,7 @@ export default function LeadList() {
       if (sort === "company") return a.company.localeCompare(b.company);
       return 0;
     });
-    
+
     return filtered;
   }
 
@@ -165,28 +166,50 @@ export default function LeadList() {
       {loading ? (
         <SkeletonTable headers={leadTableHeaders.map((h) => h.label)} />
       ) : (
-        <Table
-          headers={leadTableHeaders}
-          data={processedData}
-          clickableRows
-          onRowClick={setSelectedLead}
-          renderRow={(lead) => (
-            <LeadRow
-              key={lead.id}
-              lead={lead}
-              onSelect={setSelectedLead}
-              onUpdate={handleUpdateLead}
-              onConvert={(lead) =>
-                setNewOpportunity({
-                  id: lead.id,
-                  name: lead.name,
-                  stage: "Prospecting",
-                  accountName: lead.company,
-                })
-              }
+        <>
+          <div className="hidden md:block">
+            <Table
+              headers={leadTableHeaders}
+              data={processedData}
+              clickableRows
+              onRowClick={setSelectedLead}
+              renderRow={(lead) => (
+                <LeadRow
+                  key={lead.id}
+                  lead={lead}
+                  onSelect={setSelectedLead}
+                  onUpdate={handleUpdateLead}
+                  onConvert={(lead) =>
+                    setNewOpportunity({
+                      id: lead.id,
+                      name: lead.name,
+                      stage: "Prospecting",
+                      accountName: lead.company,
+                    })
+                  }
+                />
+              )}
             />
-          )}
-        />
+          </div>
+          <div className="block md:hidden">
+            {processedData.map((lead) => (
+              <LeadCard
+                key={lead.id}
+                lead={lead}
+                onSelect={setSelectedLead}
+                onUpdate={handleUpdateLead}
+                onConvert={(lead) =>
+                  setNewOpportunity({
+                    id: lead.id,
+                    name: lead.name,
+                    stage: "Prospecting",
+                    accountName: lead.company,
+                  })
+                }
+              />
+            ))}
+          </div>
+        </>
       )}
 
       {selectedLead && (
