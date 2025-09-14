@@ -86,7 +86,7 @@ export default function LeadList() {
       if (sort === "company") return a.company.localeCompare(b.company);
       return 0;
     });
-    console.log(filtered.map(l => l.status));
+    
     return filtered;
   }
 
