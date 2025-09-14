@@ -7,15 +7,12 @@ import { Table } from "@/components/ui/Table/Table";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../../opportunity/components/NewOpportunity";
 import { Select } from "@/components/ui/Select";
-import { Button } from "@/components/ui/Button";
-import {
-  leadStatusOptions,
-  leadTableHeaders,
-} from "../constants";
+import { leadStatusOptions, leadTableHeaders } from "../constants";
 import { leadSortOptions } from "../constants/selectSort";
 import Header from "@/components/layout/Header";
 import SkeletonTable from "@/components/ui/Table/SkeletonTable";
 import { STORAGE_KEYS } from "@/constants/storage/keys";
+import { LeadRow } from "./LeadRow";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -61,32 +58,42 @@ export default function LeadList() {
     }
   }
 
-  const processedData = useMemo(() => {
+  function filterAndSortLeads(
+    leads: Lead[],
+    search: string,
+    status: string,
+    sort: keyof Lead
+  ) {
     let filtered = [...leads];
 
-    if (appliedSearch) {
+    if (search) {
       filtered = filtered.filter(
         (lead) =>
-          lead.name.toLowerCase().includes(appliedSearch.toLowerCase()) ||
-          lead.company.toLowerCase().includes(appliedSearch.toLowerCase())
+          lead.name.toLowerCase().includes(search.toLowerCase()) ||
+          lead.company.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    if (appliedStatus !== "all") {
+    if (status !== "all") {
       filtered = filtered.filter(
-        (lead) => lead.status.toLowerCase() === appliedStatus
+        (lead) => lead.status.toLowerCase() === status
       );
     }
 
     filtered.sort((a, b) => {
-      if (appliedSort === "score") return b.score - a.score;
-      if (appliedSort === "name") return a.name.localeCompare(b.name);
-      if (appliedSort === "company") return a.company.localeCompare(b.company);
+      if (sort === "score") return b.score - a.score;
+      if (sort === "name") return a.name.localeCompare(b.name);
+      if (sort === "company") return a.company.localeCompare(b.company);
       return 0;
     });
 
     return filtered;
-  }, [leads, appliedSearch, appliedStatus, appliedSort]);
+  }
+
+  const processedData = useMemo(
+    () => filterAndSortLeads(leads, appliedSearch, appliedStatus, appliedSort),
+    [leads, appliedSearch, appliedStatus, appliedSort]
+  );
 
   async function handleUpdateLead(updatedLead: Lead) {
     const previousLeads = [...leads];
@@ -163,34 +170,19 @@ export default function LeadList() {
           data={processedData}
           clickableRows
           onRowClick={setSelectedLead}
-          renderRow={(lead: Lead) => (
-            <tr
-              key={lead.id}
-              className="border-b border-gray-200 bg-white hover:bg-gray-100 cursor-pointer"
-              onClick={() => setSelectedLead(lead)}
-            >
-              <td className="px-4 py-2">{lead.name}</td>
-              <td className="px-4 py-2 hidden md:table-cell">{lead.company}</td>
-              <td className="px-4 py-2 hidden lg:table-cell">{lead.email}</td>
-              <td className="px-4 py-2">{lead.score}</td>
-              <td className="px-4 py-2 capitalize">{lead.status}</td>
-              <td className="px-4 py-2">
-                <Button
-                  label="Convert"
-                  paddingX={2}
-                  paddingY={1}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setNewOpportunity({
-                      id: lead.id,
-                      name: lead.name,
-                      stage: "Prospecting",
-                      accountName: lead.company,
-                    });
-                  }}
-                />
-              </td>
-            </tr>
+          renderRow={(lead) => (
+            <LeadRow
+              lead={lead}
+              onSelect={setSelectedLead}
+              onConvert={(lead) =>
+                setNewOpportunity({
+                  id: lead.id,
+                  name: lead.name,
+                  stage: "Prospecting",
+                  accountName: lead.company,
+                })
+              }
+            />
           )}
         />
       )}
