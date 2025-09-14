@@ -39,7 +39,7 @@ export default function SlideOver({
         className={`fixed inset-0 bg-white/50 transition-opacity duration-500 ${
           show ? "opacity-100" : "opacity-0"
         }`}
-        onClick={(e) => {
+        onClick={() => {
           handleClose()
         }}
       />

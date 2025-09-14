@@ -16,7 +16,7 @@ export default function Topbar() {
           <span className="font-bold text-xl text-blue-600">Mini Seller Console</span>
         </div>
 
-        <nav className="md:flex space-x-6">
+        <nav className="flex space-x-6">
           {navItems.map((item) => (
             <a
               key={item.name}

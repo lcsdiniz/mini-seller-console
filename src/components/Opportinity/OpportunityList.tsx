@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import type { Opportunity } from "../../types";
 import { getOpportunities } from "../../services/opportunityService";
 import toast from "react-hot-toast";
-import { Table } from "../Table";
 import { Select } from "../Select";
 import { opportunityStageOptions, opportunityTableHeaders } from "../../constants";
 import { opportunituSortOptions } from "../../constants/opportunity/selectSort";
 import Header from "../Header";
-import SkeletonTable from "../SkeletonTable";
+import SkeletonTable from "../Table/SkeletonTable";
+import { Table } from "../Table/Table";
 
 export default function OpportunityList() {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);

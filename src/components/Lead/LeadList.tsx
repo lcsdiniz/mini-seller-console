@@ -3,7 +3,7 @@ import type { Lead, Opportunity } from "../../types";
 import { getLeads, updateLead } from "../../services/leadService";
 import toast from "react-hot-toast";
 import { createOpportunity } from "../../services/opportunityService";
-import { Table } from "../Table";
+import { Table } from "../Table/Table";
 import { LeadDetails } from "./LeadDetails";
 import { NewOpportunity } from "../Opportinity/NewOpportunity";
 import { Select } from "../Select";
@@ -11,7 +11,7 @@ import { Button } from "../Button";
 import { leadStatusOptions, leadTableHeaders, STORAGE_KEYS } from "../../constants";
 import { leadSortOptions } from "../../constants/lead/selectSort";
 import Header from "../Header";
-import SkeletonTable from "../SkeletonTable";
+import SkeletonTable from "../Table/SkeletonTable";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -103,7 +103,6 @@ export default function LeadList() {
   };
 
   async function convertLead(opportunity: Opportunity){
-    console.log("Converting lead to opportunity:", opportunity);
     try {
       await createOpportunity(opportunity);
       toast.success("Lead converted successfully.");

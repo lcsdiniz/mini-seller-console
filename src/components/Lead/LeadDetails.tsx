@@ -29,7 +29,6 @@ export function LeadDetails({
   };
 
   const editLead = () => {
-    console.log("sdsaddasd")
     if (!validateEmail(editingLead.email)) return;
     onUpdate(editingLead);
     onClose();

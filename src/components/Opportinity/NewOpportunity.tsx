@@ -3,10 +3,10 @@ import type { Opportunity } from "../../types";
 import SlideOver from "../SlideOver";
 
 type NewOpportunityProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  onCreate: (opportunity: Opportunity) => void;
-  opportunity: Opportunity;
+  readonly isOpen: boolean;
+  readonly onClose: () => void;
+  readonly onCreate: (opportunity: Opportunity) => void;
+  readonly opportunity: Opportunity;
 };
 
 export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOpportunityProps) {
