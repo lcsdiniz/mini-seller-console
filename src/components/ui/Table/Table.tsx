@@ -1,6 +1,6 @@
 import { useState, useMemo, type JSX } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import type { TableHeader } from "../../types";
+import type { TableHeader } from "../../../types";
 
 interface TableProps<T> {
   headers: TableHeader[];

@@ -1,17 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Lead, Opportunity } from "../../types";
-import { getLeads, updateLead } from "../../services/leadService";
+import type { Lead, Opportunity } from "../../../types";
+import { getLeads, updateLead } from "../../../features/lead/services/leadService";
 import toast from "react-hot-toast";
-import { createOpportunity } from "../../services/opportunityService";
-import { Table } from "../Table/Table";
+import { createOpportunity } from "../../../features/opportunity/services/opportunityService";
+import { Table } from "../../../components/ui/Table/Table";
 import { LeadDetails } from "./LeadDetails";
-import { NewOpportunity } from "../Opportinity/NewOpportunity";
-import { Select } from "../Select";
-import { Button } from "../Button";
-import { leadStatusOptions, leadTableHeaders, STORAGE_KEYS } from "../../constants";
-import { leadSortOptions } from "../../constants/lead/selectSort";
-import Header from "../Header";
-import SkeletonTable from "../Table/SkeletonTable";
+import { NewOpportunity } from "../../opportunity/components/NewOpportunity";
+import { Select } from "../../../components/ui/Select";
+import { Button } from "../../../components/ui/Button";
+import {
+  leadStatusOptions,
+  leadTableHeaders,
+} from "../constants";
+import { leadSortOptions } from "../constants/selectSort";
+import Header from "../../../components/layout/Header";
+import SkeletonTable from "../../../components/ui/Table/SkeletonTable";
+import { STORAGE_KEYS } from "../../../constants/storage/keys";
 
 export default function LeadList() {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -100,9 +104,9 @@ export default function LeadList() {
     } finally {
       setSelectedLead(null);
     }
-  };
+  }
 
-  async function convertLead(opportunity: Opportunity){
+  async function convertLead(opportunity: Opportunity) {
     try {
       await createOpportunity(opportunity);
       toast.success("Lead converted successfully.");
@@ -112,7 +116,7 @@ export default function LeadList() {
         error instanceof Error ? error.message : "Failed to convert lead."
       );
     }
-  };
+  }
 
   function applyFilters() {
     setAppliedSearch(searchInput);
@@ -127,28 +131,32 @@ export default function LeadList() {
       <Header
         searchPlaceholder="Search leads..."
         searchValue={searchInput}
-        onChangeSearch={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+        onChangeSearch={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchInput(e.target.value)
+        }
         applyFilters={applyFilters}
       >
         <Select
           type="header"
           options={leadStatusOptions}
           value={statusInput}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setStatusInput(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setStatusInput(e.target.value)
+          }
         />
-        
+
         <Select
           type="header"
           options={leadSortOptions}
           value={sortInput}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortInput(e.target.value as keyof Lead)}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setSortInput(e.target.value as keyof Lead)
+          }
         />
       </Header>
 
       {loading ? (
-        <SkeletonTable
-          headers={leadTableHeaders.map(h => h.label)}
-        />
+        <SkeletonTable headers={leadTableHeaders.map((h) => h.label)} />
       ) : (
         <Table
           headers={leadTableHeaders}

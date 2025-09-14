@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { Lead } from "../../types";
-import SlideOver from "../SlideOver";
+import type { Lead } from "../../../types";
+import SlideOver from "../../../components/layout/SlideOver";
 import { Select } from "../Select";
-import { leadStatusOptions } from "../../constants";
+import { leadStatusOptions } from "../../../constants";
 
 type LeadDetailsProps = {
   readonly lead: Lead;

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import LeadList from "../components/Lead/LeadList";
-import OpportunityList from "../components/Opportinity/OpportunityList";
+import LeadList from "../features/lead/components/LeadList";
+import OpportunityList from "../features/opportunity/components/OpportunityList";
 
 export default function AppRoutes() {
   return (
