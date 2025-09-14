@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    @apply text-sm;
+  }
+
+  @screen sm {
+    body {
+      @apply text-base;
+    }
+  }
+
+  @screen md {
+    body {
+      @apply text-lg;
+    }
+  }
+}

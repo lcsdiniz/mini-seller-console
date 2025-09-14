@@ -162,8 +162,8 @@ export default function LeadList() {
               onClick={() => setSelectedLead(lead)}
             >
               <td className="px-4 py-2">{lead.name}</td>
-              <td className="px-4 py-2">{lead.company}</td>
-              <td className="px-4 py-2">{lead.email}</td>
+              <td className="px-4 py-2 hidden md:table-cell">{lead.company}</td>
+              <td className="px-4 py-2 hidden lg:table-cell">{lead.email}</td>
               <td className="px-4 py-2">{lead.score}</td>
               <td className="px-4 py-2 capitalize">{lead.status}</td>
               <td className="px-4 py-2">

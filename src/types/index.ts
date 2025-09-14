@@ -19,6 +19,7 @@ export type Opportunity = {
 export type TableHeader = {
   key: string;
   label: string;
+  hidden?: string;
 }
 
 export type SelectOption = {

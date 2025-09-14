@@ -34,7 +34,7 @@ export function Table<T>({
         <thead>
           <tr className="bg-gray-50 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
             {headers.map((header) => (
-              <th key={header.key} className="px-4 py-2 capitalize">{header.label}</th>
+              <th key={header.key} className={`px-4 py-2 capitalize ${header.hidden}`}>{header.label}</th>
             ))}
           </tr>
         </thead>
@@ -58,7 +58,7 @@ export function Table<T>({
                   onClick={() => clickableRows && onRowClick?.(row)}
                 >
                   {headers.map((header) => (
-                    <td key={header.key} className="px-4 py-2">{(row as any)[header.key]}</td>
+                    <td key={header} className="px-4 py-2">{(row as any)[header.key]}</td>
                   ))}
                 </tr>
               )
