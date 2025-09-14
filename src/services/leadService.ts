@@ -25,7 +25,7 @@ export async function updateLead(updated: Lead) {
   try {
     await new Promise((res) => setTimeout(res, 500));
 
-    if (Math.random() < 0.1) {
+    if (Math.random() < 0.2) {
       throw new Error("Random failure while updating lead.");
     }
 

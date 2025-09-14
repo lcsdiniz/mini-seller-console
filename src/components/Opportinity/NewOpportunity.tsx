@@ -59,10 +59,10 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
     <SlideOver
       isOpen={isOpen}
       onClose={onClose}
-      onSave={save}
+      onSubmit={save}
+      submitLabel="Create"
       title="New Opportunity"
-      isSaveDisabled={isSaveDisabled}
-      saveText="Create"
+      isSubmitDisabled={isSaveDisabled}
     >
       <div className="space-y-4">
         <div>
@@ -71,7 +71,7 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
             type="text"
             value={form.id}
             disabled
-            className="border rounded px-2 py-1 w-full mt-1 bg-gray-100 cursor-not-allowed"
+            className="border rounded-md px-2 py-1 w-full mt-1 bg-gray-100 cursor-not-allowed"
           />
         </div>
 
@@ -81,7 +81,7 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
             type="text"
             value={form.name}
             disabled
-            className="border rounded px-2 py-1 w-full mt-1 bg-gray-100 cursor-not-allowed"
+            className="border rounded-md px-2 py-1 w-full mt-1 bg-gray-100 cursor-not-allowed"
           />
         </div>
 
@@ -90,7 +90,7 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
           <select
             value={form.stage}
             onChange={(e) => handleChange("stage", e.target.value)}
-            className="border rounded px-2 py-1 w-full mt-1"
+            className="border rounded-md px-2 py-1 w-full mt-1"
           >
             <option value="Prospecting">Prospecting</option>
             <option value="Qualification">Qualification</option>
@@ -106,7 +106,7 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
             type="text"
             value={form.accountName}
             onChange={(e) => handleChange("accountName", e.target.value)}
-            className={`border rounded px-2 py-1 w-full mt-1 ${errors.accountName ? "border-red-500" : ""}`}
+            className={`border rounded-md px-2 py-1 w-full mt-1 ${errors.accountName ? "border-red-500" : ""}`}
           />
           {errors.accountName && <p className="text-red-500 mt-1">{errors.accountName}</p>}
         </div>
@@ -119,7 +119,7 @@ export function NewOpportunity({ isOpen, onClose, onCreate, opportunity }: NewOp
             onChange={(e) =>
               handleChange("amount", e.target.value ? Number(e.target.value) : undefined)
             }
-            className="border rounded px-2 py-1 w-full mt-1"
+            className="border rounded-md px-2 py-1 w-full mt-1"
           />
         </div>
       </div>

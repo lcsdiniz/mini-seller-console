@@ -16,7 +16,7 @@ export default function Header({ searchPlaceholder, searchValue, onChangeSearch,
         placeholder={searchPlaceholder}
         value={searchValue}
         onChange={onChangeSearch}
-        className="px-3 py-2 border rounded shadow w-1/2 bg-white"
+        className="px-3 py-2 border rounded-md shadow w-1/2 bg-white"
         onKeyDown={(e) => {
           if (e.key === "Enter") applyFilters();
         }}

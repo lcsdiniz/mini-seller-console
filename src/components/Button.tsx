@@ -9,7 +9,7 @@ export function Button({ label, onClick, paddingX = 4, paddingY = 2 }: ButtonPro
   return (
     <button
       onClick={onClick}
-      className={`px-${paddingX} py-${paddingY} bg-blue-600 text-white rounded shadow cursor-pointer hover:bg-blue-700 transition`}
+      className={`px-${paddingX} py-${paddingY} bg-blue-600 text-white rounded-md shadow cursor-pointer hover:bg-blue-700 transition`}
     >
       {label}
     </button>

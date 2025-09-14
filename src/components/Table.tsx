@@ -1,5 +1,6 @@
 import { useState, useMemo, type JSX } from "react";
 import type { TableHeader } from "../types";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 interface TableProps<T> {
   headers: TableHeader[];
@@ -29,7 +30,7 @@ export function Table<T>({
 
   return (
     <div>
-      <table className="w-full border-collapse rounded shadow overflow-hidden">
+      <table className="w-full border-collapse rounded-md shadow overflow-hidden">
         <thead>
           <tr className="bg-gray-50 dark:bg-gray-700 text-left text-gray-600 dark:text-gray-300">
             {headers.map((header) => (
@@ -71,9 +72,9 @@ export function Table<T>({
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
-            className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50 cursor-pointer hover:bg-gray-600 transition disabled:cursor-not-allowed"
+            className="px-3 py-3 bg-gray-700 rounded-md disabled:opacity-50 cursor-pointer hover:bg-gray-600 transition disabled:cursor-not-allowed"
           >
-            Previous
+            <ChevronRightIcon className="h-5 w-5 transform rotate-180" />
           </button>
           <span className="text-gray-300">
             Page {currentPage} of {totalPages}
@@ -81,9 +82,9 @@ export function Table<T>({
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
-            className="px-3 py-1 bg-gray-700 rounded disabled:opacity-50 cursor-pointer hover:bg-gray-600 transition"
+            className="px-3 py-3 bg-gray-700 rounded-md disabled:opacity-50 cursor-pointer hover:bg-gray-600 transition disabled:cursor-not-allowed"
           >
-            Next
+            <ChevronLeftIcon className="h-5 w-5 transform rotate-180" />
           </button>
         </div>
       )}

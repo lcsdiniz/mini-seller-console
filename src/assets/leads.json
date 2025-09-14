@@ -6,7 +6,7 @@
     "email": "bulma@capsulecorp.com",
     "source": "Web",
     "score": 95,
-    "status": "New"
+    "status": "new"
   },
   {
     "id": 2,
@@ -15,7 +15,7 @@
     "email": "lara@tombventures.com",
     "source": "Referral",
     "score": 88,
-    "status": "Contacted"
+    "status": "contacted"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "email": "mario@mushroomkingdom.com",
     "source": "Web",
     "score": 80,
-    "status": "New"
+    "status": "new"
   },
   {
     "id": 4,
@@ -33,7 +33,7 @@
     "email": "naruto@hiddenleaf.com",
     "source": "Referral",
     "score": 78,
-    "status": "Contacted"
+    "status": "contacted"
   },
   {
     "id": 5,
@@ -42,7 +42,7 @@
     "email": "link@hyruletech.com",
     "source": "Web",
     "score": 85,
-    "status": "New"
+    "status": "new"
   },
   {
     "id": 6,
@@ -51,7 +51,7 @@
     "email": "sailormoon@moonlight.com",
     "source": "Referral",
     "score": 92,
-    "status": "New"
+    "status": "new"
   },
   {
     "id": 7,
@@ -60,7 +60,7 @@
     "email": "ash@palletlabs.com",
     "source": "Web",
     "score": 70,
-    "status": "Contacted"
+    "status": "contacted"
   },
   {
     "id": 8,
@@ -69,7 +69,7 @@
     "email": "spyro@dragonworks.com",
     "source": "Referral",
     "score": 68,
-    "status": "New"
+    "status": "new"
   },
   {
     "id": 9,
@@ -78,7 +78,7 @@
     "email": "kirby@dreamland.com",
     "source": "Web",
     "score": 77,
-    "status": "Contacted"
+    "status": "contacted"
   },
   {
     "id": 10,
@@ -87,7 +87,7 @@
     "email": "mikasa@scoutregiment.com",
     "source": "Referral",
     "score": 90,
-    "status": "New"
+    "status": "new"
   },
   {
     "id": 11,
@@ -96,6 +96,96 @@
     "email": "snake@outerheaven.com",
     "source": "Web",
     "score": 82,
-    "status": "Contacted"
+    "status": "contacted"
+  },
+  {
+    "id": 12,
+    "name": "Cloud Strife",
+    "company": "Avalanche Group",
+    "email": "cloud@avalanche.com",
+    "source": "Web",
+    "score": 87,
+    "status": "new"
+  },
+  {
+    "id": 13,
+    "name": "Goku",
+    "company": "Z Fighters",
+    "email": "goku@zfighters.com",
+    "source": "Referral",
+    "score": 99,
+    "status": "contacted"
+  },
+  {
+    "id": 14,
+    "name": "Samus Aran",
+    "company": "Galactic Federation",
+    "email": "samus@federation.com",
+    "source": "Web",
+    "score": 91,
+    "status": "new"
+  },
+  {
+    "id": 15,
+    "name": "Ryu",
+    "company": "Street Masters",
+    "email": "ryu@streetmasters.com",
+    "source": "Referral",
+    "score": 84,
+    "status": "contacted"
+  },
+  {
+    "id": 16,
+    "name": "Ichigo Kurosaki",
+    "company": "Soul Society Ltd",
+    "email": "ichigo@soulsociety.com",
+    "source": "Web",
+    "score": 89,
+    "status": "new"
+  },
+  {
+    "id": 17,
+    "name": "Kratos",
+    "company": "Spartan Solutions",
+    "email": "kratos@spartan.com",
+    "source": "Referral",
+    "score": 93,
+    "status": "contacted"
+  },
+  {
+    "id": 18,
+    "name": "Dante",
+    "company": "Devil May Cry Agency",
+    "email": "dante@dmcagency.com",
+    "source": "Web",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": 19,
+    "name": "Edward Elric",
+    "company": "Alchemy Brothers",
+    "email": "edward@alchemy.com",
+    "source": "Referral",
+    "score": 88,
+    "status": "contacted"
+  },
+  {
+    "id": 20,
+    "name": "Pikachu",
+    "company": "Electric Co",
+    "email": "pikachu@electricco.com",
+    "source": "Web",
+    "score": 76,
+    "status": "new"
+  },
+  {
+    "id": 21,
+    "name": "Sephiroth",
+    "company": "Shinra Corp",
+    "email": "sephiroth@shinra.com",
+    "source": "Referral",
+    "score": 97,
+    "status": "contacted"
   }
 ]

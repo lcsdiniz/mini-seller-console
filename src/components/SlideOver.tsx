@@ -4,19 +4,21 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 type SlideOverProps = {
   readonly isOpen: boolean;
   readonly onClose: () => void;
-  readonly onEdit: () => void;
+  readonly onSubmit: () => void;
+  readonly submitLabel: string;
   readonly title?: string;
   readonly children: React.ReactNode;
-  readonly isUpdateDisabled?: boolean;
+  readonly isSubmitDisabled?: boolean;
 };
 
 export default function SlideOver({
   isOpen,
   onClose,
-  onEdit,
+  onSubmit,
+  submitLabel,
   title,
   children,
-  isUpdateDisabled = false,
+  isSubmitDisabled = false,
 }: SlideOverProps) {
   const [show, setShow] = useState(false);
 
@@ -39,7 +41,6 @@ export default function SlideOver({
         }`}
         onClick={(e) => {
           handleClose()
-          e.stopPropagation()
         }}
       />
 
@@ -56,7 +57,7 @@ export default function SlideOver({
               <div className="p-4 flex justify-between items-center border-b">
                 <h2 className="text-lg font-bold">{title}</h2>
                 <button
-                  className="p-2 rounded hover:bg-gray-100 cursor-pointer"
+                  className="p-2 rounded-md hover:bg-gray-100 cursor-pointer"
                   onClick={handleClose}
                 >
                   <XMarkIcon className="h-5 w-5 text-gray-600" />
@@ -67,14 +68,14 @@ export default function SlideOver({
 
               <div className="p-4 border-t flex gap-2 justify-end">
                 <button
-                  className={`px-4 py-2 rounded font-semibold text-white bg-blue-500 hover:bg-blue-600 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors duration-200`}
-                  onClick={onEdit}
-                  disabled={isUpdateDisabled}
+                  className={`px-4 py-2 rounded-md font-semibold text-white bg-blue-500 hover:bg-blue-600 cursor-pointer disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors duration-200`}
+                  onClick={onSubmit}
+                  disabled={isSubmitDisabled}
                 >
-                  Update
+                  {submitLabel}
                 </button>
                 <button
-                  className="px-4 py-2 rounded font-semibold bg-gray-300 hover:bg-gray-400 cursor-pointer transition-colors duration-200"
+                  className="px-4 py-2 rounded-md font-semibold bg-gray-300 hover:bg-gray-400 cursor-pointer transition-colors duration-200"
                   onClick={handleClose}
                 >
                   Cancel

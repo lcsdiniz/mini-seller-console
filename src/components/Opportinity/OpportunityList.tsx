@@ -109,7 +109,7 @@ export default function OpportunityList() {
           renderRow={(opp: Opportunity) => (
             <tr
               key={opp.id}
-              className="border-b border-gray-200 hover:bg-gray-50"
+              className="border-b bg-white border-gray-200 hover:bg-gray-100"
             >
               <td className="px-4 py-2">{opp.name}</td>
               <td className="px-4 py-2">{opp.accountName}</td>

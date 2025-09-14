@@ -44,6 +44,7 @@ export default function LeadList() {
     setLoading(true);
     try {
       const data = await getLeads();
+
       setLeads(data);
     } catch (error) {
       toast.error(
@@ -84,22 +85,25 @@ export default function LeadList() {
   }, [leads, appliedSearch, appliedStatus, appliedSort]);
 
   async function handleUpdateLead(updatedLead: Lead) {
+    const previousLeads = [...leads];
+    setLeads((prev) =>
+      prev.map((lead) => (lead.id === updatedLead.id ? updatedLead : lead))
+    );
     try {
       await updateLead(updatedLead);
-      setLeads((prev) =>
-        prev.map((l) => (l.id === updatedLead.id ? updatedLead : l))
-      );
       toast.success("Lead updated successfully.");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to update lead."
       );
+      setLeads(previousLeads);
     } finally {
       setSelectedLead(null);
     }
   };
 
   async function convertLead(opportunity: Opportunity){
+    console.log("Converting lead to opportunity:", opportunity);
     try {
       await createOpportunity(opportunity);
       toast.success("Lead converted successfully.");
@@ -162,7 +166,7 @@ export default function LeadList() {
               <td className="px-4 py-2">{lead.company}</td>
               <td className="px-4 py-2">{lead.email}</td>
               <td className="px-4 py-2">{lead.score}</td>
-              <td className="px-4 py-2">{lead.status}</td>
+              <td className="px-4 py-2 capitalize">{lead.status}</td>
               <td className="px-4 py-2">
                 <Button
                   label="Convert"
