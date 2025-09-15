@@ -28,33 +28,25 @@ This project uses **local JSON files** to simulate backend data and **setTimeout
 - **TypeScript** – type safety and improved developer experience  
 - **Tailwind CSS** – utility-first responsive styling  
 - **React Hot Toast** – lightweight notifications for user actions  
-- **Local JSON** – simulates backend data for leads and opportunities  
-- **Custom Hooks & Contexts** – state and filter management  
-- **Responsive Design** – desktop → mobile  
-- **Optimistic UI Updates** – with rollback on failure  
 
 ---
 
 ## 🧩 Features
 
 ### 1. Leads List
-- Loads from a **local JSON file**.  
-- Displays fields: `id`, `name`, `company`, `email`, `source`, `score`, `status`.  
+- Loads from a **local JSON file** or **localStorage**.  
 - Functionalities:
   - **Search:** filter by name or company.  
   - **Filter:** by status (e.g., “Open”, “Contacted”).  
   - **Sort:** by score descending.  
-- Smooth handling of ~100 leads.
 
 ### 2. Lead Detail Panel
-- Click on a lead row to open a **slide-over panel**.  
+- Click on a lead row to open a **slide-over panel** with it's details.  
 - Inline editing for `status` and `email` (with validation).  
 - Save/Cancel actions with basic error handling.
 
 ### 3. Convert to Opportunity
-- **Convert Lead** button in each row.  
-- Creates an opportunity with:
-  - `id`, `name`, `stage`, `amount` (optional), `accountName`.  
+- **Convert** button in each row to convert leads into opportunities.  
 - Opportunities are displayed in a **simple table**.
 
 ### 4. UX & States
@@ -91,7 +83,7 @@ npm run dev
 ```
 
 Open the application in your browser at [http://localhost:5173](http://localhost:5173)  
-Leads and Opportunities are loaded from `assets/leads.json`.
+Leads are loaded from `assets/leads.json`.
 
 ---
 
